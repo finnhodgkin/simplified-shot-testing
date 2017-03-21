@@ -22,7 +22,7 @@ const router = require('./router');
 // For example in 'route' the object passes in require options of '/' and 'get'
 // and validates the server response of statusCode '200' and payload 'hello'
 const routesToTest = {
-  route:[{url:'/', method:'get'},{statusCode: 200, payload:'hello'}],
+  route:[{url:'/', method:'get'},{statusCode: 200, payload:'hello', headers:{'content-type':'text/html'}}],
   brokenurl:[{url:'/brokenurl'},{statusCode: 404}],
 };
 
@@ -45,8 +45,21 @@ function testRoute ([reqOptions, resOptions], name = '') {
       test(`Testing '${name || url}' with ${method}`, (t) => {
 
         Object.keys(resOptions).forEach(option => {
+
+          // second level options (headers[content-type], etc.)
+          if (typeof resOptions[option] === 'object') {
+            Object.keys(resOptions[option]).forEach(innerOption => {
+              t.equal(res[option][innerOption], resOptions[option][innerOption],
+                `${option}[${innerOption}] = ${res[option][innerOption]}`
+              );
+            });
+            return;
+          }
+
+          // first level objects (statusCode, etc.)
           t.equal(res[option], resOptions[option],
             `${option} = ${res[option]}`);
+
         });
 
         t.end();
