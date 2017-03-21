@@ -6,7 +6,7 @@ const fs = require('fs');
 const router = require('./src/router');
 
 // EXAMPLE SINGLE ROUTE TEST
-const singleRoute = (cb) => {
+const singleRoute = () => {
   // Shot options
   const requireOptions = {url:'/', method:'get'};
   const responseOptions = {statusCode: 200, headers:{'content-type':'text/html'}};
@@ -15,11 +15,10 @@ const singleRoute = (cb) => {
   // Optional second argument (string) not included (adds a custom test name).
   testRoute([requireOptions, responseOptions]);
 
-  // cb(null, 'DONE');
 };
 
 // EXAMPLE STATIC FILE TESTS
-const singleStaticFile = (cb) => {
+const singleStaticFile = () => {
 
   const requireOptions = {url:'/'};
   const responseOptions = {statusCode: 200};
@@ -28,7 +27,6 @@ const singleStaticFile = (cb) => {
     testRoute([requireOptions, responseOptions]);
   });
 
-  // cb(null, 'DONE');
 };
 
 // EXAMPLE OBJECT TO RUN MULTIPLE ROUTE TESTS
@@ -42,15 +40,6 @@ const routesToTest = {
   route:[{url:'/', method:'get'},{statusCode: 200, headers:{'content-type':'text/html'}}],
   brokenurl:[{url:'/brokenurl'},{statusCode: 404}],
 };
-
-// FUNCTION CALL FOR ALL OF THE ABOVE
-// (() => {
-//   singleRoute(()=>{
-//     singleStaticFile(()=>{
-//       testMultipleRoutes(routesToTest, ()=>{});
-//     });
-//   });
-// })();
 
 singleRoute();
 
