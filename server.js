@@ -2,7 +2,7 @@ const http = require('http');
 const hostname = process.env.HOSTNAME || 'localhost';
 const port = process.env.PORT || 4000;
 
-const router = require('./router');
+const router = require('./src/router');
 
 http.createServer(router).listen(port, () => {
   console.log(`Server running at pot http://${hostname}:${port}`);
