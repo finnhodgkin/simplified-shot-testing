@@ -1,0 +1,16 @@
+{
+  "name": "route-test-runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test | tap-spec"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "shot": "^3.4.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
+  }
+}
