@@ -9,7 +9,7 @@ const router = require('./src/router');
 const singleRoute = () => {
   // Shot options
   const requireOptions = {url:'/', method:'get'};
-  const responseOptions = {statusCode: 200, headers:{'content-type':'text/html'}};
+  const responseOptions = {statusCode: 200, headers:{'Content-Type':'text/html'}};
 
   // Function call with above options.
   // Optional second argument (string) not included (adds a custom test name).
@@ -37,10 +37,16 @@ const singleStaticFile = () => {
 // For example in 'route' the object passes in require options of '/' and 'get'
 // and validates the server response of statusCode '200' and payload 'hello'
 const routesToTest = {
-  route:[{url:'/', method:'get'},{statusCode: 200, headers:{'content-type':'text/html'}}],
-  test1:[{url:'/test1', method:'get'},{statusCode: 404, headers:{'content-type':'text/html'}}],
-  unknownUrl:[{url:'/fsdfsdfsfs', method:'get'},{statusCode: 404, headers:{'content-type':'text/html'}}],
+  route:[{url:'/', method:'get'},{statusCode: 200, headers:{'Content-Type':'text/html'}}],
+  test1:[{url:'/test1', method:'get'},{statusCode: 404, headers:{'Content-Type':'text/html'}}],
+  unknownUrl:[{url:'/fsdfsdfsfs', method:'get'},{statusCode: 404, headers:{'Content-Type':'text/html'}}],
   brokenurl:[{url:'/brokenurl'},{statusCode: 404}],
+  asset:[{url:'/assets/test.css', method:'get'},{statusCode: 200, headers:{'Content-Type':'text/css'}}],
+  assetsCorrect:[{url:'/assets/test.css'},{statusCode: 200}],
+  assetsBroken:[{url:'/assets'},{statusCode: 404}],
+  assetsUpADirectory:[{url:'/assets/../index.html'},{statusCode: 404}],
+  assetsVeryBroken:[{url:'/assetsdfsfs'},{statusCode: 404}],
+
 };
 
 singleRoute();
@@ -76,6 +82,7 @@ function testRoute ([reqOptions, resOptions], name = '') {
               const result = res[option][innerOption].length > 30 ?
                                   'Correct result' :
                                   res[option];
+
               t.equal(res[option][innerOption], resOptions[option][innerOption],
                 `${option}[${innerOption}] = ${res[option][innerOption]}`
               );
