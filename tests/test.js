@@ -3,7 +3,7 @@ const shot = require('shot');
 
 const fs = require('fs');
 
-const router = require('./src/router');
+const router = require('./../src/router');
 
 // EXAMPLE SINGLE ROUTE TEST
 const singleRoute = () => {
@@ -38,14 +38,19 @@ const singleStaticFile = () => {
 // and validates the server response of statusCode '200' and payload 'hello'
 const routesToTest = {
   route:[{url:'/', method:'get'},{statusCode: 200, headers:{'Content-Type':'text/html'}}],
+  pageLarge:[{url:'/me'},{statusCode: 200}],
   test1:[{url:'/test1', method:'get'},{statusCode: 404, headers:{'Content-Type':'text/html'}}],
   unknownUrl:[{url:'/fsdfsdfsfs', method:'get'},{statusCode: 404, headers:{'Content-Type':'text/html'}}],
   brokenurl:[{url:'/brokenurl'},{statusCode: 404}],
   asset:[{url:'/assets/test.css', method:'get'},{statusCode: 200, headers:{'Content-Type':'text/css'}}],
   assetsCorrect:[{url:'/assets/test.css'},{statusCode: 200}],
+  assetsCorrectLarge:[{url:'/assets/me.jpg'},{statusCode: 200}],
+  assetsIncorrectFile:[{url:'/assets/test2.css'},{statusCode: 404}],
   assetsBroken:[{url:'/assets'},{statusCode: 404}],
   assetsUpADirectory:[{url:'/assets/../index.html'},{statusCode: 404}],
   assetsVeryBroken:[{url:'/assetsdfsfs'},{statusCode: 404}],
+  apiSearch:[{url:'/search'}, {statusCode: 200}],
+  coolApi:[{url:'/coolApi'}, {statusCode: 200}],
 
 };
 
