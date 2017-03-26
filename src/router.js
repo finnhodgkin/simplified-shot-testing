@@ -8,7 +8,7 @@ const router = (req, res) => {
 
   const page = {
     '/':'index.html',
-    '/test':'test1.html',
+    '/brokenurl':'test1.html',
     '/test2':'test2.html',
     '/test3':'test3.html',
   }[url];

@@ -38,6 +38,8 @@ const singleStaticFile = () => {
 // and validates the server response of statusCode '200' and payload 'hello'
 const routesToTest = {
   route:[{url:'/', method:'get'},{statusCode: 200, headers:{'content-type':'text/html'}}],
+  test1:[{url:'/test1', method:'get'},{statusCode: 404, headers:{'content-type':'text/html'}}],
+  unknownUrl:[{url:'/fsdfsdfsfs', method:'get'},{statusCode: 404, headers:{'content-type':'text/html'}}],
   brokenurl:[{url:'/brokenurl'},{statusCode: 404}],
 };
 
@@ -48,6 +50,10 @@ singleStaticFile();
 testMultipleRoutes(routesToTest);
 
 
+/**
+ * @param  {object} routesToTest
+ * Runs tests on an object filled with routes
+ */
 function testMultipleRoutes (routesToTest) {
   Object.keys(routesToTest).forEach(route => {
     testRoute(routesToTest[route], route);
@@ -63,9 +69,13 @@ function testRoute ([reqOptions, resOptions], name = '') {
       (res) => {
         Object.keys(resOptions).forEach(option => {
 
-          // second level options (headers[content-type], etc.)
+          // second level objects (headers[content-type], etc.)
           if (typeof resOptions[option] === 'object') {
             Object.keys(resOptions[option]).forEach(innerOption => {
+              // cut long result strings from test name
+              const result = res[option][innerOption].length > 30 ?
+                                  'Correct result' :
+                                  res[option];
               t.equal(res[option][innerOption], resOptions[option][innerOption],
                 `${option}[${innerOption}] = ${res[option][innerOption]}`
               );
@@ -73,12 +83,18 @@ function testRoute ([reqOptions, resOptions], name = '') {
             return;
           }
 
+          // cut long result strings from test name
+          const result = res[option].length > 30 ? 'Correct result' :
+          res[option];
+
           // first level objects (statusCode, etc.)
           t.equal(res[option], resOptions[option],
-            `${option} = ${res[option]}`);
+            `${option} = ${result}`);
 
         });
         t.end();
       });
   });
 }
+
+module.export = testMultipleRoutes(routesToTest);
