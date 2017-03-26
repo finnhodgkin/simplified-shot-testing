@@ -4,19 +4,19 @@ const handler = require('./handler');
 
 const router = (req, res) => {
   const url = req.url;
-  const urlParts = _url.parse(url);
+  const pathname = _url.parse(url).pathname;
 
   const page = {
     '/':'index.html',
     '/brokenurl':'test1.html',
-    '/test2':'test2.html',
+    '/me':'me.html',
     '/test3':'test3.html',
   }[url];
 
   const api = {
     '/search':handler.search,
     '/coolApi':handler.cool,
-  }[url.pathname];
+  }[pathname];
 
   // ROUTES:
   if (page) {

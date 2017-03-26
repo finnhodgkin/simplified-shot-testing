@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test | tap-spec",
+    "test": "node tests/test | tap-spec",
     "devStart": "nodemon src/server",
-    "coverage": "istanbul cover test.js"
+    "coverage": "istanbul cover tests/test.js"
   },
   "author": "",
   "license": "ISC",
