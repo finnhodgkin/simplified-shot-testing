@@ -25,7 +25,7 @@ const router = (req, res) => {
   } else if (api) {
     api(req, res);
 
-  } else if (url.indexOf('/public') === 0) {
+  } else if (url.indexOf('/assets') === 0) {
     handler.servePublic(req, res);
 
   } else {
